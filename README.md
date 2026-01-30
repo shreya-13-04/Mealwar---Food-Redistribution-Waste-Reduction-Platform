@@ -48,7 +48,7 @@ The platform aims to **reduce food waste**, **ensure public health**, and **main
 
 ---
 
-## 🧪 Testing Strategy (Grade-Critical)
+## 🧪 Testing Strategy
 
 | Test Type              | Tool Used                          |
 |------------------------|------------------------------------|
@@ -60,7 +60,7 @@ The platform aims to **reduce food waste**, **ensure public health**, and **main
 
 ---
 
-## ⚙️ CI/CD Pipeline (Student-Friendly but Real)
+## ⚙️ CI/CD Pipeline 
 
 ### 🔄 Continuous Integration (CI)
 **Tool:** GitHub Actions  
@@ -73,9 +73,9 @@ Triggered automatically on every Pull Request:
 
 ---
 
-### 🚀 Continuous Deployment (Optional)
-- **Backend Deployment:** Render / Railway
-- **Frontend Deployment:** Vercel / Netlify
+### 🚀 Continuous Deployment 
+- **Backend Deployment:** Render 
+- **Frontend Deployment:** Vercel
 
 ---
 
