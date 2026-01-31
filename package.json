@@ -1,0 +1,23 @@
+{
+  "name": "mealwar---food-redistribution-waste-reduction-platform",
+  "version": "1.0.0",
+  "description": "A **role-aware web application** designed to safely redistribute surplus food from **restaurants, events, and institutional kitchens** to **NGOs and community kitchens**.  \r The platform aims to **reduce food waste**, **ensure public health**, and **maintain accountability** through intelligent matching, secure access control, and real-time coordination.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shreya-13-04/Mealwar---Food-Redistribution-Waste-Reduction-Platform.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shreya-13-04/Mealwar---Food-Redistribution-Waste-Reduction-Platform/issues"
+  },
+  "homepage": "https://github.com/shreya-13-04/Mealwar---Food-Redistribution-Waste-Reduction-Platform#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
