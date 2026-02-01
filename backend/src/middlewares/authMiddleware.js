@@ -11,13 +11,12 @@ const verifyFirebaseToken = async (req, res, next) => {
     const token = authHeader.split(" ")[1];
     const decodedToken = await admin.auth().verifyIdToken(token);
 
-    req.user = decodedToken;
+    req.user = decodedToken; // uid, email, etc.
     next();
   } catch (error) {
-  console.error("Token verification failed:", error);
-  return res.status(401).json({ message: "Invalid token" });
-}
-
+    console.error("Token verification failed:", error);
+    return res.status(401).json({ message: "Invalid token" });
+  }
 };
 
 module.exports = { verifyFirebaseToken };
