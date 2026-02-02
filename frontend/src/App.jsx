@@ -183,7 +183,12 @@ function App() {
       {/* Header */}
       <header className="header">
         <div className="container">
-          <h1 className="logo">MealWar</h1>
+          <div className="logo-wrapper">
+            <h1 className="logo">MealWar</h1>
+            <svg className="leaf-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C12 2 12 6 10 10C8 14 4 15 4 15C4 15 8 16 10 20C12 24 12 22 12 22C12 22 12 24 14 20C16 16 20 15 20 15C20 15 16 14 14 10C12 6 12 2 12 2Z" fill="white" fillOpacity="0.8" />
+            </svg>
+          </div>
           <p className="tagline">Reducing Food Waste, Feeding Communities</p>
         </div>
       </header>
