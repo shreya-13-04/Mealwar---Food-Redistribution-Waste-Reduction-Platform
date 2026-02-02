@@ -41,7 +41,7 @@ const mockListings = [
     location: 'Downtown Community Center',
     createdAt: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
     status: 'active',
-    imageUrl: '/brain/35ffb00e-b355-455a-8880-dff95ab58d16/fresh_vegetables_1770067863652.png'
+    imageUrl: '/food-images/fresh_vegetables_1770067863652.png'
   },
   {
     id: 2,
@@ -54,7 +54,7 @@ const mockListings = [
     location: 'Main Street Bakery',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 3), // 3 hours ago
     status: 'active',
-    imageUrl: '/brain/35ffb00e-b355-455a-8880-dff95ab58d16/bread_bakery_1770067879302.png'
+    imageUrl: '/food-images/bread_bakery_1770067879302.png'
   },
   {
     id: 3,
@@ -67,7 +67,7 @@ const mockListings = [
     location: 'City Kitchen',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 5), // 5 hours ago - EXPIRED
     status: 'expired',
-    imageUrl: '/brain/35ffb00e-b355-455a-8880-dff95ab58d16/cooked_meals_1770067899735.png'
+    imageUrl: '/food-images/cooked_meals_1770067899735.png'
   },
   {
     id: 4,
@@ -80,7 +80,7 @@ const mockListings = [
     location: 'Local Dairy Farm',
     createdAt: new Date(Date.now() - 1000 * 60 * 15), // 15 minutes ago
     status: 'active',
-    imageUrl: '/brain/35ffb00e-b355-455a-8880-dff95ab58d16/dairy_products_1770067918261.png'
+    imageUrl: '/food-images/dairy_products_1770067918261.png'
   }
 ];
 
@@ -101,7 +101,7 @@ function App() {
     location: '',
     createdAt: new Date(),
     status: 'active',
-    imageUrl: '/brain/35ffb00e-b355-455a-8880-dff95ab58d16/fresh_vegetables_1770067863652.png' // default image
+    imageUrl: '/food-images/fresh_vegetables_1770067863652.png' // default image
   });
   const [formErrors, setFormErrors] = useState({});
 
@@ -168,7 +168,7 @@ function App() {
       location: '',
       createdAt: new Date(),
       status: 'active',
-      imageUrl: '/brain/35ffb00e-b355-455a-8880-dff95ab58d16/fresh_vegetables_1770067863652.png'
+      imageUrl: '/food-images/fresh_vegetables_1770067863652.png'
     });
 
     // Switch to listings view
@@ -273,12 +273,11 @@ function App() {
 
                       {/* Food Image */}
                       <div className="food-image-container">
-                        <span className="food-icon">
-                          {listing.foodType.includes('Vegetable') ? '🥕' :
-                            listing.foodType.includes('Bread') ? '🍞' :
-                              listing.foodType.includes('Meal') ? '🍱' :
-                                listing.foodType.includes('Dairy') ? '🥛' : '🍎'}
-                        </span>
+                        <img
+                          src={listing.imageUrl}
+                          alt={listing.foodType}
+                          className="food-image"
+                        />
                       </div>
 
                       {/* Card Content */}
@@ -397,7 +396,7 @@ function App() {
                           checked={formData.redistributionMode === 'donation'}
                           onChange={handleFormChange}
                         />
-                        <span>🎁 Free Donation</span>
+                        <span>Free Donation</span>
                       </label>
                       <label className="radio-label">
                         <input
@@ -407,7 +406,7 @@ function App() {
                           checked={formData.redistributionMode === 'discounted'}
                           onChange={handleFormChange}
                         />
-                        <span>💰 Discounted</span>
+                        <span>Discounted</span>
                       </label>
                     </div>
                   </div>
