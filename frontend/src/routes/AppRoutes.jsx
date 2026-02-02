@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+import CreateListing from '../pages/CreateListing';
 import Dashboard from '../pages/Dashboard';
+
 import Listings from '../pages/Listings';
 
 export default function AppRoutes() {
@@ -13,7 +15,9 @@ export default function AppRoutes() {
             Mealwar
           </Link>
           <div className="nav-links">
+            <Link to="/create-listing">Create Listing</Link>
             <Link to="/listings">Listings</Link>
+
             <Link to="/dashboard">Dashboard</Link>
             <Link to="/register">Register</Link>
             <Link to="/">Login</Link>
@@ -26,7 +30,9 @@ export default function AppRoutes() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/create-listing" element={<CreateListing />} />
           <Route path="/listings" element={<Listings />} />
+
         </Routes>
       </main>
     </Router>
