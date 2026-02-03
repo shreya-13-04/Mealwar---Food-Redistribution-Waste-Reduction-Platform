@@ -1,0 +1,24 @@
+.liquid-ether-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* When used as a page background, ensure content sits above it */
+.page-with-bg {
+  position: relative;
+  min-height: 600px;
+  overflow: hidden;
+}
+.page-with-bg .bg-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.page-with-bg .bg-content {
+  position: relative;
+  z-index: 1;
+}
