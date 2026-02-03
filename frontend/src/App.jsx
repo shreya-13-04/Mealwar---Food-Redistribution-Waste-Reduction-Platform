@@ -6,8 +6,9 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 
 /**
- * Root Application Component
- * Handles global providers + routing.
+ * Root Application
+ * Only handles providers + routing.
+ * NO business logic here.
  */
 function App() {
   return (
@@ -15,10 +16,10 @@ function App() {
       <BrowserRouter>
         <Routes>
 
-          {/* Redirect root to dashboard */}
+          {/* Redirect base URL */}
           <Route path="/" element={<Navigate to="/dashboard" />} />
 
-          {/* Authentication */}
+          {/* Auth */}
           <Route path="/register" element={<Register />} />
 
           {/* Main App */}

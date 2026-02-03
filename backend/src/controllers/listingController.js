@@ -14,10 +14,13 @@ const { asyncHandler } = require('../middlewares/errorHandler');
  * @access Public
  */
 const createListing = asyncHandler(async (req, res) => {
-	const { foodType, quantity, preparedAt, hygieneStatus } = req.body;
+	const { foodName, foodType, quantity, quantityUnit, preparedAt, hygieneStatus, redistributionMode, description, imageUrl, preparationTime, price } = req.body;
 
 	// Validate required fields
-	const requiredFields = ['foodType', 'quantity', 'preparedAt', 'hygieneStatus'];
+	const requiredFields = ['foodName', 'foodType', 'quantity', 'quantityUnit', 'hygieneStatus', 'redistributionMode'];
+	if (redistributionMode === 'discounted') {
+		requiredFields.push('price');
+	}
 	const missingFields = requiredFields.filter(field => !req.body[field]);
 
 	if (missingFields.length > 0) {
@@ -39,13 +42,66 @@ const createListing = asyncHandler(async (req, res) => {
 		});
 	}
 
+	// Convert preparationTime to preparedAt if provided
+	let calculatedPreparedAt = preparedAt ? new Date(preparedAt) : null;
+
+	// Check if frontend sent preparedAtDateTime (for immediate preparation)
+	const { preparedAtDateTime } = req.body;
+	if (preparedAtDateTime) {
+		calculatedPreparedAt = new Date(preparedAtDateTime);
+	}
+
+	if (!calculatedPreparedAt && preparationTime) {
+		const now = new Date();
+		switch (preparationTime) {
+			case 'immediate':
+				calculatedPreparedAt = now;
+				break;
+			case '1hour':
+				calculatedPreparedAt = new Date(now.getTime() - 60 * 60 * 1000);
+				break;
+			case '2hours':
+				calculatedPreparedAt = new Date(now.getTime() - 2 * 60 * 60 * 1000);
+				break;
+			case '4hours':
+				calculatedPreparedAt = new Date(now.getTime() - 4 * 60 * 60 * 1000);
+				break;
+			case 'today':
+				calculatedPreparedAt = new Date(now.setHours(8, 0, 0, 0)); // 8 AM today
+				break;
+			case 'yesterday':
+				const yesterday = new Date(now);
+				yesterday.setDate(yesterday.getDate() - 1);
+				calculatedPreparedAt = new Date(yesterday.setHours(8, 0, 0, 0));
+				break;
+			default:
+				calculatedPreparedAt = now;
+		}
+	}
+
+	if (!calculatedPreparedAt) {
+		return res.status(400).json({
+			success: false,
+			error: 'Preparation time is required',
+			details: {
+				message: 'Please provide either preparedAt or preparationTime'
+			}
+		});
+	}
+
 	try {
 		// Create new listing - expiry time will be calculated automatically by the model
 		const listingData = {
+			foodName,
 			foodType,
 			quantity: parseInt(quantity),
-			preparedAt: new Date(preparedAt),
-			hygieneStatus
+			quantityUnit,
+			preparedAt: calculatedPreparedAt,
+			hygieneStatus,
+			redistributionMode,
+			description: description || '',
+			imageUrl: imageUrl || '',
+			price: redistributionMode === 'discounted' ? parseFloat(price) : undefined
 		};
 
 		const listing = new Listing(listingData);
@@ -77,7 +133,7 @@ const createListing = asyncHandler(async (req, res) => {
 		try {
 			await Promise.race([
 				listing.save(),
-				new Promise((_, reject) => 
+				new Promise((_, reject) =>
 					setTimeout(() => reject(new Error('Database operation timeout')), 5000)
 				)
 			]);
@@ -85,7 +141,7 @@ const createListing = asyncHandler(async (req, res) => {
 			// If database fails, return success anyway for testing (safety validation already passed)
 			if (dbError.message.includes('timeout') || dbError.message.includes('buffering')) {
 				console.log('Database timeout, but safety validation passed - returning mock success for testing');
-				
+
 				// Create mock response for testing
 				const mockListing = {
 					_id: `mock_${Date.now()}`,
@@ -148,14 +204,14 @@ const getListings = asyncHandler(async (req, res) => {
 		// Try to mark expired listings and get active ones with timeout
 		let expiredCount = 0;
 		let listings = [];
-		
+
 		try {
 			await Promise.race([
 				Promise.all([
 					markExpiredListings().then(count => expiredCount = count),
 					getActiveListings().then(list => listings = list)
 				]),
-				new Promise((_, reject) => 
+				new Promise((_, reject) =>
 					setTimeout(() => reject(new Error('Database operation timeout')), 5000)
 				)
 			]);

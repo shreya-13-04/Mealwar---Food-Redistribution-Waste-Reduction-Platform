@@ -67,7 +67,7 @@ const listingSchema = new mongoose.Schema({
 		type: Date,
 		required: [true, 'Preparation time is required'],
 		validate: {
-			validator: function(value) {
+			validator: function (value) {
 				// Preparation time cannot be in the future
 				return value <= new Date();
 			},
@@ -94,6 +94,49 @@ const listingSchema = new mongoose.Schema({
 			message: 'Status must be one of: active, expired, claimed'
 		}
 	},
+	// New fields for frontend-backend integration
+	foodName: {
+		type: String,
+		required: [true, 'Food name is required'],
+		trim: true,
+		minlength: [2, 'Food name must be at least 2 characters'],
+		maxlength: [100, 'Food name must not exceed 100 characters']
+	},
+	redistributionMode: {
+		type: String,
+		required: [true, 'Redistribution mode is required'],
+		enum: {
+			values: ['donation', 'discounted'],
+			message: 'Redistribution mode must be either donation or discounted'
+		},
+		default: 'donation'
+	},
+	quantityUnit: {
+		type: String,
+		required: [true, 'Quantity unit is required'],
+		enum: {
+			values: ['kg', 'g', 'lb', 'pieces', 'liters'],
+			message: 'Quantity unit must be one of: kg, g, lb, pieces, liters'
+		},
+		default: 'kg'
+	},
+	description: {
+		type: String,
+		trim: true,
+		maxlength: [500, 'Description must not exceed 500 characters']
+	},
+	imageUrl: {
+		type: String,
+		default: '',
+		trim: true
+	},
+	price: {
+		type: Number,
+		required: function () {
+			return this.redistributionMode === 'discounted';
+		},
+		min: [0, 'Price cannot be negative']
+	},
 	createdAt: {
 		type: Date,
 		default: Date.now
@@ -112,7 +155,7 @@ listingSchema.index({ createdAt: -1 }); // Index for creation time sorting
  * Pre-save middleware to calculate expiry time based on food type
  * Requirements: 2.1, 3.1
  */
-listingSchema.pre('save', function(next) {
+listingSchema.pre('save', function (next) {
 	if (this.isNew || this.isModified('preparedAt') || this.isModified('foodType')) {
 		// Calculate expiry time based on food type and safety windows
 		const safetyWindowHours = config.safetyWindows[this.foodType] || 4; // Default 4 hours
@@ -126,7 +169,7 @@ listingSchema.pre('save', function(next) {
  * Static method to check if a listing is expired
  * Requirements: 3.1, 3.4
  */
-listingSchema.statics.isExpired = function(listing) {
+listingSchema.statics.isExpired = function (listing) {
 	return new Date() > listing.expiryTime;
 };
 
@@ -134,7 +177,7 @@ listingSchema.statics.isExpired = function(listing) {
  * Static method to check if a listing is safe for consumption
  * Requirements: 2.2, 5.1, 10.2
  */
-listingSchema.statics.isSafe = function(listing) {
+listingSchema.statics.isSafe = function (listing) {
 	// Food is safe if not expired and hygiene status is acceptable or better
 	const acceptableHygieneStatuses = ['excellent', 'good', 'acceptable'];
 	return !this.isExpired(listing) && acceptableHygieneStatuses.includes(listing.hygieneStatus);
@@ -143,14 +186,14 @@ listingSchema.statics.isSafe = function(listing) {
 /**
  * Instance method to check if this listing is expired
  */
-listingSchema.methods.isExpired = function() {
+listingSchema.methods.isExpired = function () {
 	return this.constructor.isExpired(this);
 };
 
 /**
  * Instance method to check if this listing is safe
  */
-listingSchema.methods.isSafe = function() {
+listingSchema.methods.isSafe = function () {
 	return this.constructor.isSafe(this);
 };
 
@@ -158,7 +201,7 @@ listingSchema.methods.isSafe = function() {
  * Static method to get safety window for a food type
  * Requirements: 2.1
  */
-listingSchema.statics.getSafetyWindow = function(foodType) {
+listingSchema.statics.getSafetyWindow = function (foodType) {
 	return config.safetyWindows[foodType] || 4; // Default 4 hours
 };
 
