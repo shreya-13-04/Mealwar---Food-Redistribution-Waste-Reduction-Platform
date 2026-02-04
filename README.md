@@ -1,11 +1,11 @@
-# 🍽️Mealwar - Food Redistribution & Waste Reduction Platform
+# Mealwar - Food Redistribution & Waste Reduction Platform
 
 A **role-aware web application** designed to safely redistribute surplus food from **restaurants, events, and institutional kitchens** to **NGOs and community kitchens**.  
 The platform aims to **reduce food waste**, **ensure public health**, and **maintain accountability** through intelligent matching, secure access control, and real-time coordination.
 
 ---
 
-## 🎯 Key Objectives
+##  Key Objectives
 - Reduce edible food waste
 - Ensure safe and timely food redistribution
 - Enable transparent accountability among stakeholders
@@ -14,9 +14,9 @@ The platform aims to **reduce food waste**, **ensure public health**, and **main
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
-### 🌐 Frontend
+###  Frontend
 - **React.js** – Component-based user interface
 - **Vite** – Fast development and build tool
 - **React Router** – Client-side routing
@@ -25,20 +25,20 @@ The platform aims to **reduce food waste**, **ensure public health**, and **main
 
 ---
 
-### 🧠 Backend
+###  Backend
 - **Node.js** – Server-side JavaScript runtime
 - **Express.js** – RESTful API framework
 - **Firebase Authentication** – Secure user login and identity management
 
 ---
 
-### 🗄️ Database
+###  Database
 - **MongoDB** – NoSQL database with flexible schema design
 - **Mongoose** – Object Data Modeling (ODM) for MongoDB
 
 ---
 
-### 🔐 Security & Access Control
+###  Security & Access Control
 - **Firebase ID Tokens (JWT)** – Secure API access
 - **Role-Based Access Control (RBAC)**  
   - Food Provider (Donor)  
@@ -48,7 +48,7 @@ The platform aims to **reduce food waste**, **ensure public health**, and **main
 
 ---
 
-## 🧪 Testing Strategy
+##  Testing Strategy
 
 | Test Type              | Tool Used                          |
 |------------------------|------------------------------------|
@@ -60,9 +60,9 @@ The platform aims to **reduce food waste**, **ensure public health**, and **main
 
 ---
 
-## ⚙️ CI/CD Pipeline 
+##  CI/CD Pipeline 
 
-### 🔄 Continuous Integration (CI)
+###  Continuous Integration (CI)
 **Tool:** GitHub Actions  
 
 Triggered automatically on every Pull Request:
@@ -73,13 +73,13 @@ Triggered automatically on every Pull Request:
 
 ---
 
-### 🚀 Continuous Deployment 
+###  Continuous Deployment 
 - **Backend Deployment:** Render 
 - **Frontend Deployment:** Vercel
 
 ---
 
-## 🧰 Development Tools
+##  Development Tools
 - **Git & GitHub** – Version control
 - **Postman** – API testing
 - **Docker (Optional)** – Local containerized setup
@@ -87,7 +87,7 @@ Triggered automatically on every Pull Request:
 
 ---
 
-## 📄 Documentation
+##  Documentation
 - Software Requirements Specification (SRS)
 - Architecture Diagram
 - ER Diagram
@@ -96,7 +96,7 @@ Triggered automatically on every Pull Request:
 
 ---
 
-## 🌱 Impact
+##  Impact
 - Reduces food wastage
 - Supports food-insecure communities
 - Saves CO₂ emissions through redistribution
@@ -104,7 +104,7 @@ Triggered automatically on every Pull Request:
 
 ---
 
-## 👥 Team
+##  Team
 Built by a cross-functional team focusing on **trust, logistics optimization, real-time coordination, and sustainability-driven engineering**.
 
 ---
